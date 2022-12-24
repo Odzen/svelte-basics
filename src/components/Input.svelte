@@ -1,8 +1,7 @@
 <script>
-  export let value = 'World';
+  export let name;
 </script>
 
 <div class="Input">
-  <input type="text" bind:value />
-  <p>Hello {value}</p>
+  <input bind:value={name} />
 </div>
