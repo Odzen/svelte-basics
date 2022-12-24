@@ -5,15 +5,15 @@
   let characters = [];
   let filtered = [];
   let name = 'rick';
-  let status = 'alive';
 
   const filterByName = () => {
+    //fetchData();
     filtered = characters.filter((character) => character.name.match(name));
   };
 
   const fetchData = async () => {
     const response = await fetch(
-      `https://rickandmortyapi.com/api/character/?name=${name}&status=${status}`
+      `https://rickandmortyapi.com/api/character/?name=${name}`
     );
 
     const data = await response.json();
@@ -43,14 +43,14 @@
       </figure>
     {/each}
     <!-- {:else}
-      {#each characters as character}
-        <figure>
-          <img src={character.image} alt={character.name} />
-          <figcaption>{character.name}</figcaption>
-        </figure>
-      {:else}
-        <p>Loading...</p>
-      {/each}
+    {#each characters as character}
+      <figure>
+        <img src={character.image} alt={character.name} />
+        <figcaption>{character.name}</figcaption>
+      </figure>
+    {:else}
+      <p>Loading...</p>
+    {/each}
     {/if} -->
   </section>
 </div>
