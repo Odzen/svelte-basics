@@ -2,20 +2,14 @@
   import { onMount } from 'svelte';
   import Input from './Input.svelte';
 
+  import Select from './Select.svelte';
+
   let characters = [];
-  // let filtered = [];
 
-  let name = 'rick';
+  let states = ['All', 'Alive', 'Dead', 'unknown'];
+  let selected = 'All';
 
-  $: filtered = characters.filter((character) =>
-    character.name.toLowerCase().match(name.toLowerCase())
-  );
-
-  // const filterByName = () => {
-  //   //fetchData();
-  //   console.log('On key up', name);
-  //   filtered = characters.filter((character) => character.name.match(name));
-  // };
+  let name = '';
 
   const fetchData = async () => {
     const response = await fetch(`https://rickandmortyapi.com/api/character`);
@@ -25,19 +19,44 @@
     console.log(data.results);
 
     characters = data.results;
-    filtered = characters;
   };
 
   onMount(async () => {
-    console.log('On mount');
     fetchData();
   });
+
+  $: filtered = characters;
+
+  $: if (selected || name) filterCharacters();
+
+  const filterCharacters = () => {
+    if (selected === 'All')
+      return (filtered = characters.filter((character) =>
+        character.name.toLowerCase().includes(name.toLowerCase())
+      ));
+
+    return (filtered = characters.filter(
+      (character) =>
+        character.status === selected &&
+        character.name.toLowerCase().includes(name.toLowerCase())
+    ));
+  };
 </script>
 
 <div class="Photos">
   <h1>Photos</h1>
   <!-- <input bind:value={name} on:keyup={filterByName} /> -->
   <Input bind:value={name} />
+  <Select bind:value={selected} bind:options={states} />
+
+  <!-- <select bind:value={selected}>
+    {#each states as status}
+      <option value={status}>
+        {status}
+      </option>
+    {/each}
+  </select> -->
+
   <h1>{name}</h1>
   <section>
     <!-- {#if filtered.length > 0} -->

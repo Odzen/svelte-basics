@@ -3,7 +3,7 @@
 </script>
 
 <div class="Input">
-  <input bind:value />
+  <input bind:value placeholder="Search" />
 </div>
 
 <style>
