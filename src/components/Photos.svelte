@@ -3,18 +3,22 @@
   import Input from './Input.svelte';
 
   let characters = [];
-  let filtered = [];
+  // let filtered = [];
+
   let name = 'rick';
 
-  const filterByName = () => {
-    //fetchData();
-    filtered = characters.filter((character) => character.name.match(name));
-  };
+  $: filtered = characters.filter((character) =>
+    character.name.toLowerCase().match(name.toLowerCase())
+  );
+
+  // const filterByName = () => {
+  //   //fetchData();
+  //   console.log('On key up', name);
+  //   filtered = characters.filter((character) => character.name.match(name));
+  // };
 
   const fetchData = async () => {
-    const response = await fetch(
-      `https://rickandmortyapi.com/api/character/?name=${name}`
-    );
+    const response = await fetch(`https://rickandmortyapi.com/api/character`);
 
     const data = await response.json();
 
@@ -32,8 +36,9 @@
 
 <div class="Photos">
   <h1>Photos</h1>
-  <input bind:value={name} on:keyup={filterByName} />
-  <!-- <Input name on:keyup={filterByName} /> -->
+  <!-- <input bind:value={name} on:keyup={filterByName} /> -->
+  <Input bind:value={name} />
+  <h1>{name}</h1>
   <section>
     <!-- {#if filtered.length > 0} -->
     {#each filtered as character}

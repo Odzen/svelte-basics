@@ -1,7 +1,13 @@
 <script>
-  export let name;
+  export let value = '';
 </script>
 
 <div class="Input">
-  <input bind:value={name} />
+  <input bind:value />
 </div>
+
+<style>
+  input {
+    border-radius: 10px;
+  }
+</style>
